@@ -29,6 +29,7 @@ if dbExist == 0:
     conn = db.connect(theDb)
     cur = conn.cursor()        
     # create a table for the project
+    # based on http://www.gaia-gis.it/spatialite-2.4.0-4/splite-python.html
     sql = 'CREATE TABLE breweries ('
     sql += 'OGC_FID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,'
     sql += 'GEOMETRY BLOB NOT NULL,'
@@ -36,6 +37,7 @@ if dbExist == 0:
     cur.execute(sql)
 
     # create the geometry table
+    # based on a working SQlite db created by ogr2ogr
     cur.execute('CREATE TABLE geometry_columns (f_table_name TEXT,f_geometry_column TEXT, geometry_type INTEGER, coord_dimension INTEGER, srid INTEGER, geometry_format TEXT )')
     # populate the geometry_columns, each table (if > 1) needs an entry
     cur.execute("""INSERT INTO geometry_columns (f_table_name,f_geometry_column , geometry_type,coord_dimension,srid,geometry_format ) VALUES ('breweries','GEOMETRY',3,2,4326,'WKB')""")
